@@ -1,0 +1,6 @@
+{
+  "name": "atmega328p",
+  "vendor": "Atmel",
+  "family": "atmega",
+  "target": "atmega328"
+}
