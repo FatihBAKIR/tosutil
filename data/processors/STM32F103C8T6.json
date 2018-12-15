@@ -1,0 +1,6 @@
+{
+  "name": "STM32F103C8T6",
+  "family": "STM32F1",
+  "vendor": "STMicro",
+  "target": "cortex-m3"
+}

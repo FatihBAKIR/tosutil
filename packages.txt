@@ -1,0 +1,4 @@
+cpprestsdk
+boost
+spdlog
+nlohmann-json
