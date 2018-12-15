@@ -1,0 +1,4 @@
+{
+  "alias": "ESP Open SDK",
+  "processors": [ "esp8266" ]
+}

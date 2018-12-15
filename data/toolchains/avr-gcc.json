@@ -1,0 +1,4 @@
+{
+  "alias": "AVR-GCC",
+  "targets": [ "atmega328" ]
+}
