@@ -1,4 +1,4 @@
 {
-  "name": "cortex-m4f",
+  "alias": "cortex-m4f",
   "arch": "arm-v7"
 }

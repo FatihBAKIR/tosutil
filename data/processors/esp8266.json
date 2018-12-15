@@ -1,5 +1,5 @@
 {
-  "name": "esp8266",
+  "alias": "esp8266",
   "family": "esp8266",
   "vendor": "Espressif",
   "target": "xtensa-lx106"

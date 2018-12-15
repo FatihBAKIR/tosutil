@@ -1,5 +1,5 @@
 {
-  "name": "STM32F103RB",
+  "alias": "STM32F103RB",
   "family": "STM32F1",
   "vendor": "STMicro",
   "target": "cortex-m3"

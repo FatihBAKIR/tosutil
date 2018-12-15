@@ -10,19 +10,19 @@
 namespace {
     tut::arch_t parse_arch(const nlohmann::json& j)
     {
-        return { j["name"] };
+        return { j["alias"] };
     }
 
     tut::target_t parse_target(const nlohmann::json& j)
     {
-        return { tut::load_arch(j["arch"]), j["name"] };
+        return { tut::load_arch(j["arch"]), j["alias"] };
     }
 
     tut::processor_t parse_processor(const nlohmann::json& j)
     {
         return {
                 tut::load_target(j["target"]),
-                j["name"],
+                j["alias"],
                 j["vendor"],
                 j["family"]
         };

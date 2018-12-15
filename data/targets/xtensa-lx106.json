@@ -1,4 +1,4 @@
 {
-  "name": "xtensa-lx106",
+  "alias": "xtensa-lx106",
   "arch": "xtensa-l106"
 }

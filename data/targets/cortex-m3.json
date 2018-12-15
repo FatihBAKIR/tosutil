@@ -1,4 +1,4 @@
 {
-  "name": "cortex-m3",
+  "alias": "cortex-m3",
   "arch": "arm-v7"
 }

@@ -1,4 +1,4 @@
 {
-  "name": "atmega328",
+  "alias": "atmega328",
   "arch": "avr"
 }

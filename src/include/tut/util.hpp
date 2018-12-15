@@ -11,19 +11,19 @@ namespace tut
 {
 struct arch_t
 {
-    std::string name;
+    std::string alias;
 };
 
 struct target_t
 {
     std::shared_ptr<const arch_t> arch;
-    std::string name;
+    std::string alias;
 };
 
 struct processor_t
 {
     std::shared_ptr<const target_t> target;
-    std::string name;
+    std::string alias;
     std::string vendor;
     std::string family;
 };
@@ -31,6 +31,6 @@ struct processor_t
 struct toolchain_t
 {
     std::shared_ptr<const arch_t> arch;
-    std::string name;
+    std::string alias;
 };
 }

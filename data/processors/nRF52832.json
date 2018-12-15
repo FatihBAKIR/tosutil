@@ -1,5 +1,5 @@
 {
-  "name": "nRF52832",
+  "alias": "nRF52832",
   "family": "nRF5",
   "vendor": "Nordic",
   "target": "cortex-m4f"

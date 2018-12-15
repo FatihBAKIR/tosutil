@@ -1,0 +1,6 @@
+{
+  "alias": "Arduino Pro Mini 8MhZ, 3.3V",
+  "processor": "atmega328p",
+  "vcc": 3.3,
+  "ftdi": false
+}
