@@ -1,6 +1,6 @@
 {
   "alias": "STM32 Blue Pill",
-  "processor": "STM32F103C8T6",
+  "processor": "STM32/F103C8T6",
   "vcc": 3.3,
   "ftdi": false
 }

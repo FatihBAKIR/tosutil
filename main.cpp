@@ -1,15 +1,28 @@
 #include <iostream>
 #include <tut/util.hpp>
 #include <tut/loaders.hpp>
+#include <map>
+#include <boost/process.hpp>
 
-int main() {
-    std::cout
-            << tut::load_proc("STM32/F103RB")->alias << '\n'
-            << tut::load_proc("STM32/F103RB")->target->arch->alias << '\n';
+auto programs = []{
+   std::map<std::string, std::string> res;
+    res.emplace("info", "./src/src/apps/info");
+    res.emplace("analyze", "./src/src/apps/analyze");
+   return res;
+}();
 
-    std::cout << '\n';
-    
-    std::cout
-            << tut::load_proc("atmega328p")->alias << '\n'
-            << tut::load_proc("atmega328p")->target->arch->alias << '\n';
+int main(int argc, char** argv) {
+    namespace bp = boost::process;
+    namespace fs = boost::filesystem;
+
+    auto p = fs::canonical(fs::system_complete(argv[0]).parent_path());
+
+    std::vector<std::string> args{ argv + 1, argv + argc };
+
+    auto prog = p / programs[args[0]];
+
+    args.erase(args.begin());
+
+    bp::child c(prog, bp::args(args));
+    c.wait();
 }
