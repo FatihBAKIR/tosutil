@@ -1,0 +1,6 @@
+{
+  "alias": "Nucleo F103RB",
+  "processor": "STM32F103RB",
+  "vcc": 3.3,
+  "ftdi": true
+}
