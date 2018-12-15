@@ -18,6 +18,7 @@ struct target_t
 {
     std::shared_ptr<const arch_t> arch;
     std::string alias;
+    std::string triplet;
 };
 
 struct processor_t
