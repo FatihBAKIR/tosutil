@@ -8,7 +8,7 @@
 #include <fstream>
 
 namespace {
-	template <class T> struct id_t { using type = T; };
+	template <class T> struct identity_t { using type = T; };
 
     tut::arch_t parse_arch(const nlohmann::json& j)
     {
@@ -44,103 +44,50 @@ namespace {
 		return res;
 	}
 
+	tut::programmer_args_t parse_args(const nlohmann::json& j)
+    {
+        tut::programmer_args_t res;
+        res.programmer = tut::load_programmer(j["name"]);
+        res.args = j;
+        res.args.erase("name");
+        return res;
+    }
+
 	tut::board_t parse_board(const nlohmann::json& j)
 	{
 		tut::board_t res;
 		res.proc = tut::load_proc(j["processor"]);
-		for (auto& programmer : j["programmers"])
+		for (const nlohmann::json& programmer : j["programmers"])
 		{
-			res.programmers.push_back(tut::load_programmer(programmer));
+		    if (programmer.is_string())
+            {
+                res.programmers.push_back({tut::load_programmer(programmer), {}});
+            } else {
+                res.programmers.push_back(parse_args(programmer));
+		    }
 		}
 		res.alias = j["alias"];
 		return res;
 	}
 
 	template <class... ArgTs>
-	auto parse(id_t<tut::arch_t>, ArgTs&&... args) { return parse_arch(std::forward<ArgTs>(args)...); }
+	auto parse(identity_t<tut::arch_t>, ArgTs&&... args) { return parse_arch(std::forward<ArgTs>(args)...); }
 
 	template <class... ArgTs>
-	auto parse(id_t<tut::target_t>, ArgTs&&... args) { return parse_target(std::forward<ArgTs>(args)...); }
+	auto parse(identity_t<tut::target_t>, ArgTs&&... args) { return parse_target(std::forward<ArgTs>(args)...); }
 
 	template <class... ArgTs>
-	auto parse(id_t<tut::processor_t>, ArgTs&&... args) { return parse_processor(std::forward<ArgTs>(args)...); }
+	auto parse(identity_t<tut::processor_t>, ArgTs&&... args) { return parse_processor(std::forward<ArgTs>(args)...); }
 
 	template <class... ArgTs>
-	auto parse(id_t<tut::programmer_t>, ArgTs&&... args) { return parse_programmer(std::forward<ArgTs>(args)...); }
+	auto parse(identity_t<tut::programmer_t>, ArgTs&&... args) { return parse_programmer(std::forward<ArgTs>(args)...); }
 
 	template <class... ArgTs>
-	auto parse(id_t<tut::board_t>, ArgTs&&... args) { return parse_board(std::forward<ArgTs>(args)...); }
+	auto parse(identity_t<tut::board_t>, ArgTs&&... args) { return parse_board(std::forward<ArgTs>(args)...); }
 }
 
 namespace tut
 {
-    std::map<std::string, std::weak_ptr<const tut::target_t>> targets;
-    std::map<std::string, std::weak_ptr<const tut::arch_t>> archs;
-    std::map<std::string, std::weak_ptr<const tut::processor_t>> procs;
-
-    std::shared_ptr<const tut::arch_t>
-    load_arch(const std::string& name)
-    {
-        auto ptr = archs.find(name);
-        if (archs.find(name) != archs.end())
-        {
-            if (auto res = ptr->second.lock(); res)
-            {
-                return res;
-            }
-            archs.erase(ptr);
-        }
-
-        nlohmann::json j;
-        std::ifstream file("C:/Users/mfati/Documents/tosutil/data/archs/" + name + ".json");
-        file >> j;
-        auto res = std::make_shared<tut::arch_t>(parse_arch(j));
-        archs.emplace(name, res);
-        return res;
-    }
-
-    std::shared_ptr<const tut::target_t>
-    load_target(const std::string& name)
-    {
-        auto ptr = targets.find(name);
-        if (targets.find(name) != targets.end())
-        {
-            if (auto res = ptr->second.lock(); res)
-            {
-                return res;
-            }
-            targets.erase(ptr);
-        }
-
-        nlohmann::json j;
-        std::ifstream file("C:/Users/mfati/Documents/tosutil/data/targets/" + name + ".json");
-        file >> j;
-        auto res = std::make_shared<tut::target_t>(parse_target(j));
-        targets.emplace(name, res);
-        return res;
-    }
-
-    std::shared_ptr<const tut::processor_t>
-    load_proc(const std::string& name)
-    {
-        auto ptr = procs.find(name);
-        if (procs.find(name) != procs.end())
-        {
-            if (auto res = ptr->second.lock(); res)
-            {
-                return res;
-            }
-            procs.erase(ptr);
-        }
-
-        nlohmann::json j;
-        std::ifstream file("C:/Users/mfati/Documents/tosutil/data/processors/" + name + ".json");
-        file >> j;
-        auto res = std::make_shared<tut::processor_t>(parse_processor(j));
-        procs.emplace(name, res);
-        return res;
-    }
-
 	template <class ObjT>
 	struct shared_loader
 	{
@@ -161,7 +108,7 @@ namespace tut
 			nlohmann::json j;
 			std::ifstream file(m_base + "/" + name + ".json");
 			file >> j;
-			auto res = std::make_shared<ObjT>(parse(id_t<ObjT>{}, j));
+			auto res = std::make_shared<ObjT>(parse(identity_t<ObjT>{}, j));
 			m_cache.emplace(name, res);
 			return res;
 		}
@@ -171,15 +118,40 @@ namespace tut
 		std::map < std::string, std::weak_ptr<const ObjT>> m_cache;
 	};
 
-	shared_loader<tut::programmer_t> programmer_cache{"C:/Users/mfati/Documents/tosutil/data/programmers"};
-	std::shared_ptr<const tut::programmer_t> load_programmer(const std::string& name)
+	const std::string data_base = "/home/fatih/tosutil/data";
+
+	std::shared_ptr<const tut::arch_t>
+    load_arch(const std::string& name)
+    {
+		static shared_loader<tut::arch_t> cache{data_base + "/archs"};
+		return cache(name);
+    }
+
+    std::shared_ptr<const tut::target_t>
+    load_target(const std::string& name)
+    {
+		static shared_loader<tut::target_t> cache{data_base + "/targets"};
+		return cache(name);
+    }
+
+    std::shared_ptr<const tut::processor_t>
+    load_proc(const std::string& name)
+    {
+		static shared_loader<tut::processor_t> cache{data_base + "/processors"};
+		return cache(name);
+    }
+
+	std::shared_ptr<const tut::programmer_t>
+	load_programmer(const std::string& name)
 	{
-		return programmer_cache(name);
+		static shared_loader<tut::programmer_t> cache{data_base + "/programmers"};
+		return cache(name);
 	}
 
-	shared_loader<tut::board_t> board_cache{"C:/Users/mfati/Documents/tosutil/data/boards"};
-	std::shared_ptr<const tut::board_t> load_board(const std::string& name)
+	std::shared_ptr<const tut::board_t>
+	load_board(const std::string& name)
 	{
-		return board_cache(name);
+		static shared_loader<tut::board_t> cache{data_base + "/boards"};
+		return cache(name);
 	}
 }

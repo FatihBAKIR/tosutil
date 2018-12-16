@@ -1,5 +1,5 @@
 #include <tut/elf.hpp>
-#include <ELFIO/elfio.hpp>
+#include <elfio/elfio.hpp>
 
 namespace tut
 {

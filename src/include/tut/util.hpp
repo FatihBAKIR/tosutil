@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <nlohmann/json.hpp>
 
 namespace tut
 {
@@ -42,10 +43,16 @@ struct programmer_t
 	std::string alias;
 };
 
+struct programmer_args_t
+{
+	std::shared_ptr<const programmer_t> programmer;
+	nlohmann::json args;
+};
+
 struct board_t
 {
 	std::shared_ptr<const processor_t> proc;
-	std::vector<std::shared_ptr<const programmer_t>> programmers;
+	std::vector<programmer_args_t> programmers;
 	std::string alias;
 };
 }
