@@ -49,7 +49,7 @@ namespace tut
         }
 
         nlohmann::json j;
-        std::ifstream file("/home/fatih/tosutil/data/archs/" + name + ".json");
+        std::ifstream file("C:/Users/mfati/Documents/tosutil/data/archs/" + name + ".json");
         file >> j;
         auto res = std::make_shared<tut::arch_t>(parse_arch(j));
         archs.emplace(name, res);
@@ -70,7 +70,7 @@ namespace tut
         }
 
         nlohmann::json j;
-        std::ifstream file("/home/fatih/tosutil/data/targets/" + name + ".json");
+        std::ifstream file("C:/Users/mfati/Documents/tosutil/data/targets/" + name + ".json");
         file >> j;
         auto res = std::make_shared<tut::target_t>(parse_target(j));
         targets.emplace(name, res);
@@ -91,7 +91,7 @@ namespace tut
         }
 
         nlohmann::json j;
-        std::ifstream file("/home/fatih/tosutil/data/processors/" + name + ".json");
+        std::ifstream file("C:/Users/mfati/Documents/tosutil/data/processors/" + name + ".json");
         file >> j;
         auto res = std::make_shared<tut::processor_t>(parse_processor(j));
         procs.emplace(name, res);

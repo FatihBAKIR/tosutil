@@ -1,2 +1,5 @@
 cmake-build-*/
 .idea/
+.vs/
+.gitignore~
+..gitignore.un~
