@@ -8,16 +8,15 @@
 namespace bp = boost::process;
 namespace fs = boost::filesystem;
 
-void program_avrdude()
-{
-
-}
-
 void program_openocd(const tut::programmer_args_t& pargs, const std::string& program)
 {
-	std::string openocd_executable = "openocd";
+    fs::path openocd_root = "/usr";
+	auto openocd_executable = openocd_root / "bin/openocd";
+
+	auto script_search_path = openocd_root / "share/openocd/scripts";
 
 	std::vector<std::string> args;
+	args.push_back(fmt::format("-s {}", script_search_path.string()));
 	args.push_back(fmt::format("-f {}", pargs.args["file"]));
 	args.push_back(fmt::format("-c \"program {} verify reset exit\"", program));
 

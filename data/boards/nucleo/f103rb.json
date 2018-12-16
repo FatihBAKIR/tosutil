@@ -6,7 +6,7 @@
   "programmers": [
     {
       "name": "openocd",
-      "file": "scripts/board/st_nucleo_f103rb.cfg"
+      "file": "board/st_nucleo_f103rb.cfg"
     }
   ]
 }
