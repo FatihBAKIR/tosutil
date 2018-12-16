@@ -1,4 +1,9 @@
-add_library(util_lib src/util.cpp include/tut/util.hpp include/tut/loaders.hpp src/json_loaders.cpp)
+add_library(util_lib 
+	src/util.cpp 
+	include/tut/util.hpp 
+	include/tut/loaders.hpp 
+	src/json_loaders.cpp
+	src/elf.cpp)
 target_include_directories(util_lib PUBLIC include)
 
 find_package(spdlog CONFIG REQUIRED)

@@ -1,0 +1,11 @@
+openocd -f /usr/share/openocd/scripts/board/st_nucleo_f103rb.cfg -c "program stm32_lora verify reset exit"
+
+/opt/x-tools/avr-gcc/bin/avr-objcopy -O ihex -R .eeprom temp_master sdcard.hex
+avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyUSB0 -b 57600 -U flash:w:sdcard.hex
+
+esptool.py elf2image cspot_caps
+esptool.py --baud 921600  write_flash --flash_mode dio  0x00000 cspot_caps-0x00000.bin 0x10000 cspot_caps-0x10000.bin
+
+/opt/x-tools/gcc-arm-none-eabi-7-2017-q4-major/bin/arm-none-eabi-objcopy -O binary nrf52_blink nrf52_blink.bin
+nrfutil dfu genpkg --dev-type 0x0052 --sd-req 0x0088 --application nrf52_blink.bin app.zip
+nrfutil dfu serial -pkg app.zip -b115200 -p /dev/ttyUSB0

@@ -31,3 +31,11 @@ tosutil install sdk esp-open-sdk
 tosutil install sdk nRF5
 tosutil install sdk libopencm3
 ```
+
+## Downloading firmware to boards
+
+```
+tosutil program nucleo/F103RB blink.elf
+tosutil program arduino/uno blink.elf
+tosutil program nodemcu blink.elf
+```

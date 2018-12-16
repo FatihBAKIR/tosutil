@@ -4,25 +4,21 @@
 
 #include <string>
 #include <tut/loaders.hpp>
-#include <elfio/elfio.hpp>
-#include <elfio/elfio_dump.hpp>
+#include <tut/elf.hpp>
 #include <iostream>
 #include <map>
 
-void write_info(std::ostream& os, ELFIO::elfio& e)
+void write_info(std::ostream& os, tut::elf_ptr e)
 {
-    os << e.get_machine();
+    os << to_string(get_machine(*e));
 }
 
 int main(int argc, char** argv)
 {
-    std::map<std::string, void(*)(std::ostream&, ELFIO::elfio&)> funcs;
+    std::map<std::string, void(*)(std::ostream&, tut::elf_ptr)> funcs;
     funcs.emplace("info", &write_info);
 
-    ELFIO::elfio e;
-
-    e.load(argv[2]);
-
-    funcs[argv[1]](std::cout, e);
+	auto elf_obj = tut::load_elf(argv[2]);
+    funcs[argv[1]](std::cout, std::move(elf_obj));
     std::cout << '\n';
 }

@@ -8,6 +8,7 @@ auto programs = []{
    std::map<std::string, std::string> res;
     res.emplace("info", "./info.exe");
     res.emplace("analyze", "./analyze.exe");
+    res.emplace("program", "./program.exe");
    return res;
 }();
 

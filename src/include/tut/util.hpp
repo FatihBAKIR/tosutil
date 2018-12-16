@@ -6,6 +6,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace tut
 {
@@ -31,7 +32,20 @@ struct processor_t
 
 struct toolchain_t
 {
-    std::shared_ptr<const arch_t> arch;
+    std::vector<std::shared_ptr<const arch_t>> arches;
     std::string alias;
+};
+
+struct programmer_t
+{
+	std::vector<std::shared_ptr<const arch_t>> arches;
+	std::string alias;
+};
+
+struct board_t
+{
+	std::shared_ptr<const processor_t> proc;
+	std::vector<std::shared_ptr<const programmer_t>> programmers;
+	std::string alias;
 };
 }

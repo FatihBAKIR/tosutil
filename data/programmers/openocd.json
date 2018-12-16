@@ -1,0 +1,8 @@
+{
+  "alias": "openocd",
+  "arches": [
+    "arm-v7"
+  ],
+  "args": [
+  ]
+}
