@@ -21,4 +21,10 @@ target_link_libraries(util_lib PUBLIC Boost::boost Boost::system Boost::filesyst
 if (UNIX)
 target_link_libraries(util_lib PUBLIC pthread)
 endif()
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	target_compile_options(util_lib PUBLIC -static-libgcc -static-libstdc++ -static -fPIC)
+	target_link_options(util_lib PUBLIC -static-libgcc -static-libstdc++ -static -fPIC)
+endif()
+
 add_subdirectory(src/apps)
