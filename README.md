@@ -22,7 +22,7 @@ tosutil analyze safety blink.elf
 ## Downloading firmware to boards
 
 ```
-tosutil program nucleo/F103RB blink.elf
+tosutil program nucleo/f103rb blink.elf
 tosutil program arduino/uno blink.elf
 tosutil program nodemcu blink.elf
 ```

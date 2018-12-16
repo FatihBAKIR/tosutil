@@ -4,23 +4,23 @@
 #include <map>
 #include <boost/process.hpp>
 
-auto programs = []{
-   std::map<std::string, std::string> res;
-    res.emplace("info", "./info");
-    res.emplace("analyze", "./analyze");
-    res.emplace("program", "./program");
-   return res;
-}();
+namespace bp = boost::process;
+namespace fs = boost::filesystem;
 
 int main(int argc, char** argv) {
-    namespace bp = boost::process;
-    namespace fs = boost::filesystem;
-
     auto p = fs::canonical(fs::system_complete(argv[0]).parent_path());
+
+    auto programs = [&]{
+        std::map<std::string, fs::path> res;
+        res.emplace("info", bp::search_path("info", { p, p/"src/src/" }));
+        res.emplace("analyze", bp::search_path("analyze", { p, p/"src/src/" }));
+        res.emplace("program", bp::search_path("program", { p, p/"src/src/" }));
+        return res;
+    }();
 
     std::vector<std::string> args{ argv + 1, argv + argc };
 
-    auto prog = p / programs[args[0]];
+    auto prog =  programs[args[0]];
 
     args.erase(args.begin());
 
