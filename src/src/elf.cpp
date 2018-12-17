@@ -11,10 +11,17 @@ namespace tut
 	elf_ptr load_elf(const std::string & path)
 	{
 		auto res = elf_ptr(new elf);
-		if (!res->e.load(path))
+
+		if (!boost::filesystem::exists(path))
 		{
 			throw std::runtime_error("file not found: " + path);
 		}
+
+		if (!res->e.load(path))
+		{
+			throw std::runtime_error("not an elf file: " + path);
+		}
+
 		return res;
 	}
 

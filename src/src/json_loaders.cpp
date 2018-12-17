@@ -118,7 +118,7 @@ namespace tut
 		std::map < std::string, std::weak_ptr<const ObjT>> m_cache;
 	};
 
-	const std::string data_base = "/home/fatih/tosutil/data";
+	const std::string data_base = "C:/Users/mfati/Documents/tosutil/data";
 
 	std::shared_ptr<const tut::arch_t>
     load_arch(const std::string& name)
