@@ -4,6 +4,7 @@
 #include <tut/loaders.hpp>
 #include <fmt/format.h>
 #include <iostream>
+#include <tut/errors.hpp>
 #include "program.hpp"
 
 namespace bp = boost::process;
@@ -25,8 +26,12 @@ int main(int argc, char** argv) try
 	}
 
     tut::program_descriptor desc;
-
     desc.full_path = fs::canonical(argv[2]);
+
+    if (!fs::exists(desc.full_path))
+	{
+    	throw tut::file_not_found(desc.full_path);
+	}
 
 	auto board = tut::load_board(argv[1]);
 	auto& programmer = board->programmers[0];
