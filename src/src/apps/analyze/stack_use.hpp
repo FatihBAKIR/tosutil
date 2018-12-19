@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <filesystem>
+#include <boost/filesystem.hpp>
 #include <vector>
 
 namespace tut
@@ -15,5 +15,5 @@ namespace tut
 		std::string type;
 	};
 
-	std::vector<su_entry> parse_su_file(const std::filesystem::path& su_file);
+	std::vector<su_entry> parse_su_file(const boost::filesystem::path& su_file);
 }

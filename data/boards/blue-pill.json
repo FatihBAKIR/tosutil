@@ -2,5 +2,11 @@
   "alias": "STM32 Blue Pill",
   "processor": "STM32/F103C8T6",
   "vcc": 3.3,
-  "ftdi": false
+  "ftdi": false,
+  "programmers": [
+    {
+      "name": "openocd",
+      "scripts": ["interface/stlink-v2.cfg", "target/stm32f1x.cfg"]
+    }
+  ]
 }

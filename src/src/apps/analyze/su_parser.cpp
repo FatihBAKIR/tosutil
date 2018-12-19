@@ -2,24 +2,26 @@
 #include "stack_use.hpp"
 #include <fstream>
 #include <regex>
+#include <tut/errors.hpp>
 
-namespace fs = std::filesystem;
+namespace fs = boost::filesystem;
 
 namespace tut
 {
-	std::vector<tut::su_entry> parse_su_file(const std::filesystem::path& su_file)
+	std::vector<tut::su_entry> parse_su_file(const boost::filesystem::path& su_file)
 	{
 		if (!fs::exists(su_file))
 		{
-			throw std::runtime_error("file not found: " + su_file.string());
+			throw tut::file_not_found(su_file);
 		}
-		std::ifstream file{ su_file };
+
+		std::ifstream file{ su_file.string() };
 		
 		std::vector<tut::su_entry> res;
 		while (file)
 		{
 			std::string line;
-			line.resize(512);
+			line.resize(1024);
 			file.getline(line.data(), line.size(), '\n');
 
 			std::regex pattern{"(.+):([0-9]+):([0-9]+):(.*)\t([0-9]+)\t(.*)"};

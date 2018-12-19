@@ -6,6 +6,10 @@
 #include <map>
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <boost/filesystem.hpp>
+#include <tut/errors.hpp>
+
+namespace fs = boost::filesystem;
 
 namespace {
 	template <class T> struct identity_t { using type = T; };
@@ -106,7 +110,15 @@ namespace tut
 			}
 
 			nlohmann::json j;
-			std::ifstream file(m_base + "/" + name + ".json");
+
+			auto p = m_base + "/" + name + ".json";
+
+			if (!fs::exists(p))
+            {
+			    throw tut::file_not_found(p);
+            }
+
+			std::ifstream file(p);
 			file >> j;
 			auto res = std::make_shared<ObjT>(parse(identity_t<ObjT>{}, j));
 			m_cache.emplace(name, res);
@@ -118,7 +130,7 @@ namespace tut
 		std::map < std::string, std::weak_ptr<const ObjT>> m_cache;
 	};
 
-	const std::string data_base = "C:/Users/mfati/Documents/tosutil/data";
+	const std::string data_base = "/home/fatih/tosutil/data";
 
 	std::shared_ptr<const tut::arch_t>
     load_arch(const std::string& name)

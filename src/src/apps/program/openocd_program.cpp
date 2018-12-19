@@ -12,8 +12,8 @@ enum class verification_result
 	wrong_machine
 };
 
-static [[nodiscard]] 
-verification_result 
+static [[nodiscard]]
+verification_result
 verify_program(const tut::program_descriptor& program)
 {
 	auto e = tut::load_elf(program.full_path);
@@ -33,7 +33,7 @@ void program_openocd(const tut::programmer_args_t& pargs, const tut::program_des
 		throw std::runtime_error("Not a compatible binary! (" + std::to_string(int(res)) + ")");
 	}
 
-    fs::path openocd_root = "C:/x-tools/OpenOCD";
+    fs::path openocd_root = "/usr";
 	auto openocd_executable = bp::search_path("openocd", { openocd_root / "bin" });
 
 	if (openocd_executable.empty())
@@ -46,8 +46,11 @@ void program_openocd(const tut::programmer_args_t& pargs, const tut::program_des
 	std::vector<std::string> args;
 	args.push_back("-s");
 	args.push_back(script_search_path.string());
-	args.push_back("-f");
-	args.push_back(pargs.args["file"]);
+	for (auto& script : pargs.args["scripts"])
+	{
+		args.push_back("-f");
+		args.push_back(script);
+	}
 	args.push_back("-c");
 	args.push_back(fmt::format("program {} verify reset exit", program.full_path.string()));
 

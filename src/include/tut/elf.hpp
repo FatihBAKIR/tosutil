@@ -3,7 +3,6 @@
 #include <boost/filesystem.hpp>
 #include <string>
 #include <memory>
-#include <filesystem>
 
 namespace tut
 {
@@ -32,10 +31,6 @@ namespace tut
 	using elf_ptr = std::unique_ptr<elf, elf_deleter>;
 
 	elf_ptr load_elf(const std::string& path);
-
-	inline elf_ptr load_elf(const std::filesystem::path& p) {
-		return load_elf(p.string());
-	}
 
 	inline elf_ptr load_elf(const boost::filesystem::path& p) {
 		return load_elf(p.string());

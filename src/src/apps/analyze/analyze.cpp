@@ -7,10 +7,10 @@
 #include <tut/elf.hpp>
 #include <iostream>
 #include <map>
-#include <filesystem>
+#include <fmt/format.h>
 #include "stack_use.hpp"
 
-namespace fs = std::filesystem;
+namespace fs = boost::filesystem;
 
 void write_info(std::ostream& os, fs::path program)
 {
@@ -23,7 +23,7 @@ void stack_use(std::ostream& os, fs::path su_file)
 	auto use = tut::parse_su_file(su_file);
 	for (auto& line : use)
 	{
-		std::cout << line.file_name << "(" << line.row << ") " << line.function << " " << line.stack_use << '\n';
+		fmt::print("{}({}) {} {}\n", line.file_name, line.row, line.function, line.stack_use);
 	}
 }
 
