@@ -8,6 +8,12 @@ namespace bp = boost::process;
 namespace fs = boost::filesystem;
 
 int main(int argc, char** argv) {
+
+    if(argc == 1){
+        std::cout << "Not enough arguments" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     auto p = fs::canonical(fs::system_complete(argv[0]).parent_path());
 
     auto programs = [&]{
