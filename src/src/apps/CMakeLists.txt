@@ -6,3 +6,4 @@ target_link_libraries(scan PUBLIC util_lib)
 
 add_subdirectory(program)
 add_subdirectory(analyze)
+add_subdirectory(prepare)

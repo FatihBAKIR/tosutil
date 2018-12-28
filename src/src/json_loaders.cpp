@@ -8,6 +8,7 @@
 #include <fstream>
 #include <boost/filesystem.hpp>
 #include <tut/errors.hpp>
+#include <iostream>
 
 namespace fs = boost::filesystem;
 

@@ -1,9 +1,9 @@
-add_library(util_lib 
-	src/util.cpp 
-	include/tut/util.hpp 
-	include/tut/loaders.hpp 
-	src/json_loaders.cpp
-	src/elf.cpp include/tut/errors.hpp)
+add_library(util_lib
+		src/util.cpp
+		include/tut/util.hpp
+		include/tut/loaders.hpp
+		src/json_loaders.cpp
+		src/elf.cpp include/tut/errors.hpp)
 target_include_directories(util_lib PUBLIC include)
 
 find_package(fmt CONFIG REQUIRED)
@@ -19,7 +19,7 @@ find_package(Boost REQUIRED COMPONENTS system filesystem)
 target_link_libraries(util_lib PUBLIC Boost::boost Boost::system Boost::filesystem)
 
 if (UNIX)
-target_link_libraries(util_lib PUBLIC pthread)
+	target_link_libraries(util_lib PUBLIC pthread)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")

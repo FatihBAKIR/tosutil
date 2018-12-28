@@ -24,14 +24,13 @@ int main(int argc, char** argv) try
 		std::cerr << "usage: program board file\n";
 		return 1;
 	}
-
     tut::program_descriptor desc;
     desc.full_path = fs::canonical(argv[2]);
 
     if (!fs::exists(desc.full_path))
-	{
-    	throw tut::file_not_found(desc.full_path);
-	}
+    {
+        throw tut::file_not_found(desc.full_path);
+    }
 
 	auto board = tut::load_board(argv[1]);
 	auto& programmer = board->programmers[0];

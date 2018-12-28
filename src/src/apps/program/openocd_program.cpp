@@ -44,14 +44,14 @@ void program_openocd(const tut::programmer_args_t& pargs, const tut::program_des
 	auto script_search_path = openocd_root / "share/openocd/scripts";
 
 	std::vector<std::string> args;
-	args.push_back("-s");
+	args.emplace_back("-s");
 	args.push_back(script_search_path.string());
 	for (auto& script : pargs.args["scripts"])
 	{
-		args.push_back("-f");
+		args.emplace_back("-f");
 		args.push_back(script);
 	}
-	args.push_back("-c");
+	args.emplace_back("-c");
 	args.push_back(fmt::format("program {} verify reset exit", program.full_path.string()));
 
 	bp::child(openocd_executable, bp::args(args)).wait();
