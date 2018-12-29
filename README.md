@@ -9,6 +9,7 @@ libspdlog-dev
 libboost-all-dev
 json(nlohmann)
 7z
+wget
 ```
 
 ## Get information

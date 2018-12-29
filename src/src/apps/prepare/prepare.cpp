@@ -24,10 +24,45 @@
 namespace bp = boost::process;
 namespace fs = boost::filesystem;
 
-void extract(std::string filename){
+
+void getFile(const std::string& link) {
+
+
+#if defined(BOOST_POSIX_API) //TODO: Test unix env
+    fs::path wget_root = "/usr";
+    std::vector<std::string> args;
+
+    auto wget_executable = bp::search_path("wget", { wget_root / "bin" });
+
+    if (wget_executable.empty())
+    {
+        throw std::runtime_error("Could not find wget executable");
+    }
+
+    args.emplace_back(link);
+
+    bp::ipstream pipe_stream;
+    bp::child c(wget_executable, args, bp::std_out > pipe_stream);
+
+    std::string line;
+    while (pipe_stream && std::getline(pipe_stream, line) && !line.empty())
+        std::cout << line << std::endl;
+
+    c.wait();
+
+
+
+#elif defined(BOOST_WINDOWS_API) //TODO: This code won't work :D
+
+#endif
+
+}
+
+
+
+void extract(const std::string& filename){
     std::string exe;
     std::vector<std::string> args;
-    std::string run;
 
 #if defined(BOOST_POSIX_API) //TODO: Test unix env
     fs::path l7z_root = "/usr";
@@ -72,9 +107,11 @@ int main(int argc, char** argv) try
         return 1;
     }
 
-    extract("OpenOCD-20180728.zip");
+    //extract("OpenOCD-20180728.zip");
 
+    //std::string openocdLink = "https://github.com/ntfreak/openocd/archive/v0.10.0.tar.gz";
 
+    //getFile(openocdLink);
 
     std::cout << "hede" << std::endl;
 
