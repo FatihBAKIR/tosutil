@@ -29,6 +29,7 @@ void extract(std::string filename){
     std::vector<std::string> args;
     std::string run;
 
+#if defined(BOOST_POSIX_API) //TODO: Test unix env
     fs::path l7z_root = "/usr";
     auto l7z_executable = bp::search_path("7z", { l7z_root / "bin" });
 
@@ -36,8 +37,6 @@ void extract(std::string filename){
     {
         throw std::runtime_error("Could not find l7z executable");
     }
-
-#if defined(BOOST_POSIX_API) //TODO: Test unix env
     args.emplace_back("x"); // For extract
     args.emplace_back("-y"); // assume Yes on all queries. eg: override files
     args.emplace_back(filename);
