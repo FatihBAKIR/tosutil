@@ -2,6 +2,15 @@
 
 `tosutil` is a command line tool and libraries that are designed to simplify development with the tos operating system.
 
+## Required packages
+```
+libfmt-dev
+libspdlog-dev
+libboost-all-dev
+json(nlohmann)
+7z
+```
+
 ## Get information
 
 ```

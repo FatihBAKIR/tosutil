@@ -5,10 +5,10 @@
 #ifndef TOSUTIL_PREPARE_H
 #define TOSUTIL_PREPARE_H
 
+#include <string>
 
-class prepare {
 
-};
+void extract(std::string filename);
 
 
 #endif //TOSUTIL_PREPARE_H

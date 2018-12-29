@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
         res.emplace("info", bp::search_path("info", { p, p/"src/src/" }));
         res.emplace("analyze", bp::search_path("analyze", { p, p/"src/src/" }));
         res.emplace("program", bp::search_path("program", { p, p/"src/src/" }));
+        res.emplace("prepare", bp::search_path("prepare", { p, p/"src/src/" }));
         return res;
     }();
 
