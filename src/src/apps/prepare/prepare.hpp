@@ -7,8 +7,9 @@
 
 #include <string>
 
-
-void extract(std::string filename);
+std::string getDistro();
+void getFile(const std::string& link, const std::string& dest, const std::string& name);
+void extract(const std::string& filename);
 
 
 #endif //TOSUTIL_PREPARE_H
