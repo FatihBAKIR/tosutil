@@ -18,6 +18,9 @@ target_include_directories(util_lib PUBLIC ${JSON_INCLUDE_DIR})
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 target_link_libraries(util_lib PUBLIC Boost::boost Boost::system Boost::filesystem)
 
+find_package(cpprestsdk REQUIRED)
+target_link_libraries(util_lib PUBLIC cpprestsdk::cpprest)
+
 if (UNIX)
 	target_link_libraries(util_lib PUBLIC pthread)
 endif()
