@@ -14,8 +14,7 @@
 #include <boost/system/error_code.hpp>
 #include <cpprest/http_client.h>
 
-
-#include "prepare_lin.hpp"
+#include <tut/install/install.hpp>
 #include <tut/sys_id.hpp>
 
 
@@ -44,7 +43,7 @@ std::string get_distro() {
 }
 
 
-void getFile(const std::string &link, const std::string &dest, const std::string &name) {
+void get_file(const std::string &link, const std::string &dest, const std::string &name) {
 
     fs::path wget_root = "/usr";
     std::vector<std::string> args;
@@ -124,7 +123,7 @@ int main(int argc, char **argv) try {
     std::string arg1(argv[1]);
     std::string arg2(argv[2]);
     if (arg1 == "board") {
-        if (getDistro() == "Ubuntu") {
+        if (get_distro() == "Ubuntu") {
             if (arg2 == "nucleo/f103rb") {
                 fs::path openocd_root = "/usr";
                 auto openocd_executable = bp::search_path("openocd", {openocd_root / "bin"});
@@ -174,7 +173,7 @@ int main(int argc, char **argv) try {
                 //getFile(openocdLink, "./openocd/", "openocd-v0.10.0.tar.gz");
 
             }
-        } else if (getDistro() == "Fedora") {
+        } else if (get_distro() == "Fedora") {
             // Install openocd on fedora
             // End of Install openocd on fedora
         } else {

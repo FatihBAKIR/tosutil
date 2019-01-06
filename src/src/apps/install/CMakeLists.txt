@@ -1,5 +1,7 @@
-add_executable(install_utils_lin install_lin.cpp)
-target_link_libraries(install_utils_lin PUBLIC util_lib)
-
-add_executable(install_utils_win install_lin.cpp)
-target_link_libraries(install_utils_win PUBLIC util_lib)
+if (WIN32)
+    add_executable(install_utils_win install_win.cpp)
+    target_link_libraries(install_utils_win PUBLIC util_lib)
+else()
+    add_executable(install_utils_lin install_lin.cpp)
+    target_link_libraries(install_utils_lin PUBLIC util_lib)
+endif()
