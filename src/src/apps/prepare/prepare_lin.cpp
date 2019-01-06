@@ -15,31 +15,8 @@
 #include <cpprest/http_client.h>
 
 
-#include "prepare.hpp"
-
-#if defined(BOOST_POSIX_API)
-#define SHELL_COMMAND_PREFIX "-c"
-#elif defined(BOOST_WINDOWS_API)
-#define SHELL_COMMAND_PREFIX "/c"
-#endif
-
-
-// Check GCC
-#if __GNUC__
-#if __x86_64__ || __ppc64__
-#define ENV64BIT
-#else
-#define ENV32BIT
-#endif
-#endif
-
-
-#ifdef ENV32BIT // 32 Bit
-#define x86 1
-#else // 64 Bit
-#define x86_64 1
-#endif
-
+#include "prepare_lin.hpp"
+#include <tut/sys_id.hpp>
 
 
 namespace bp = boost::process;
@@ -48,7 +25,7 @@ namespace fs = boost::filesystem;
 using namespace web::http;
 using namespace web::http::client;
 
-std::string getDistro() {
+std::string get_distro() {
     std::string ret;
     bp::ipstream pipe_stream;
 

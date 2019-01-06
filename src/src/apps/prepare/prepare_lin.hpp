@@ -7,7 +7,6 @@
 
 #include <string>
 
-std::string getDistro();
 void getFile(const std::string& link, const std::string& dest, const std::string& name);
 void extract(const std::string& filename);
 
