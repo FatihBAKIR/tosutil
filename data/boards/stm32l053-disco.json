@@ -1,0 +1,12 @@
+{
+  "alias": "STM32L0 DISCO",
+  "processor": "STM32/L053",
+  "vcc": 3.3,
+  "ftdi": true,
+  "programmers": [
+    {
+      "name": "openocd",
+      "scripts": ["board/stm32l0discovery.cfg"]
+    }
+  ]
+}

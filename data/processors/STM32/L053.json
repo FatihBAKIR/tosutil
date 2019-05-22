@@ -1,0 +1,6 @@
+{
+  "alias": "STM32L053",
+  "family": "STM32L0",
+  "vendor": "STMicro",
+  "target": "cortex-m0plus"
+}
